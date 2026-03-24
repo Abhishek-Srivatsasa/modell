@@ -99,16 +99,16 @@ export default function UploadAnalysisPage() {
 
   const liveLikeResult: LiveDetectionResult | null = sessionData
     ? {
-        risk_score: Number(sessionData.risk_score ?? 0),
-        xception_score: Number(sessionData.xception_score ?? 0),
-        rppg_bpm: Number(sessionData.rppg_bpm ?? 0),
-        temporal_score: Number(sessionData.temporal_score ?? 0),
-        audio_spoof_probability: Number(sessionData.audio_spoof_probability ?? 0),
-        audio_attack_type: String(sessionData.audio_attack_type ?? "NONE") as LiveDetectionResult["audio_attack_type"],
+        risk_score: Number((sessionData.result as any)?.risk_score ?? sessionData.risk_score ?? 0),
+        xception_score: Number((sessionData.result as any)?.xception_score ?? sessionData.xception_score ?? 0),
+        rppg_bpm: Number((sessionData.result as any)?.rppg_bpm ?? sessionData.rppg_bpm ?? 0),
+        temporal_score: Number((sessionData.result as any)?.temporal_score ?? sessionData.temporal_score ?? 0),
+        audio_spoof_probability: Number((sessionData.result as any)?.audio_score ?? sessionData.audio_score ?? 0),
+        audio_attack_type: String((sessionData.result as any)?.audio_attack_type ?? sessionData.audio_attack_type ?? "NONE") as LiveDetectionResult["audio_attack_type"],
       }
     : null;
 
-  const regions = ((sessionData?.suspicious_regions as SuspiciousRegion[]) ?? []);
+  const regions = (((sessionData?.result as any)?.suspicious_regions ?? sessionData?.suspicious_regions) as SuspiciousRegion[]) ?? [];
   const imageUrl = String(sessionData?.image_url ?? previewUrl ?? "");
   const heatmapUrl = String(sessionData?.heatmap_url ?? "");
 

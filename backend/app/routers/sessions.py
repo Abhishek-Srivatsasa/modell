@@ -111,6 +111,7 @@ async def get_session_detail(
         "started_at": session.started_at.isoformat() if session.started_at else None,
         "completed_at": session.completed_at.isoformat() if session.completed_at else None,
         "duration_seconds": session.duration_seconds,
+        "heatmap_url": det.gradcam_path if det and det.gradcam_path else None,
         "result": {
             "verdict": det.verdict,
             "risk_score": det.risk_score,
@@ -118,6 +119,7 @@ async def get_session_detail(
             "xception_score": det.xception_score,
             "temporal_score": det.temporal_score,
             "rppg_score": det.rppg_score,
+            "rppg_bpm": frame_results[-1].rppg_value if frame_results and frame_results[-1].rppg_value is not None else 0.0,
             "liveness_score": det.liveness_score,
             "audio_score": det.audio_score,
             "explanation_reasons": det.explanation_reasons,

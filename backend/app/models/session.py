@@ -1,7 +1,8 @@
 from __future__ import annotations
+import uuid
 
 from sqlalchemy import Column, ForeignKey, Integer, String, func, text
-from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy import String
 from sqlalchemy.types import DateTime
 
 from db.database import Base
@@ -13,12 +14,12 @@ class VerificationSession(Base):
     __tablename__ = "verification_sessions"
 
     id = Column(
-        UUID(as_uuid=True),
+        String(36),
         primary_key=True,
-        server_default=text("gen_random_uuid()"),
+        default=lambda: __import__("uuid").uuid4().hex,
         nullable=False,
     )
-    user_id = Column(UUID(as_uuid=True), ForeignKey("users.id"), nullable=False, index=True)
+    user_id = Column(String(36), ForeignKey("users.id"), nullable=False, index=True)
     mode = Column(String, nullable=False)  # live | upload
     status = Column(String, nullable=False, server_default=text("'pending'"))
     subject_name = Column(String, nullable=True)

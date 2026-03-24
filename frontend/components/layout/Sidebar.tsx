@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Activity, FileText, Gauge, Settings, Upload, Video } from "lucide-react";
+import { Activity, FileText, Gauge, Settings, Upload, Video, Mic } from "lucide-react";
 
 import { useAppStore } from "@/lib/store";
 
@@ -16,6 +16,7 @@ const items: NavItem[] = [
   { href: "/dashboard", label: "Dashboard", icon: Gauge },
   { href: "/verify/live", label: "Live Verify", icon: Activity },
   { href: "/verify/upload", label: "Upload Analyze", icon: Upload },
+  { href: "/dashboard/audio-verify", label: "Audio Analyze", icon: Mic },
   { href: "/sessions", label: "Sessions", icon: Video },
   { href: "/reports", label: "Reports", icon: FileText },
   { href: "/settings", label: "Settings", icon: Settings },

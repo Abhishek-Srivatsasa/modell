@@ -1,7 +1,8 @@
 from __future__ import annotations
+import uuid
 
 from sqlalchemy import Column, ForeignKey, String, func, text
-from sqlalchemy.dialects.postgresql import JSONB, UUID
+from sqlalchemy import JSON as JSONB, String
 from sqlalchemy.types import DateTime
 
 from db.database import Base
@@ -13,20 +14,20 @@ class AuditLog(Base):
     __tablename__ = "audit_logs"
 
     id = Column(
-        UUID(as_uuid=True),
+        String(36),
         primary_key=True,
-        server_default=text("gen_random_uuid()"),
+        default=lambda: __import__("uuid").uuid4().hex,
         nullable=False,
     )
     user_id = Column(
-        UUID(as_uuid=True),
+        String(36),
         ForeignKey("users.id"),
         nullable=True,
         index=True,
     )
     action = Column(String, nullable=False)
     resource_type = Column(String, nullable=True)
-    resource_id = Column(UUID(as_uuid=True), nullable=True)
+    resource_id = Column(String(36), nullable=True)
     ip_address = Column(String, nullable=True)
     extra_data = Column(JSONB, nullable=True)
     created_at = Column(DateTime(timezone=True), nullable=False, server_default=func.now())

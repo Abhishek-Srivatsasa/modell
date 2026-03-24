@@ -27,7 +27,7 @@ class Settings(BaseSettings):
 
     use_mock_models: bool = True
 
-    cors_origins: List[AnyHttpUrl] = []
+    cors_origins: List[str] = []
 
     n8n_webhook_url: AnyHttpUrl | None = None
 

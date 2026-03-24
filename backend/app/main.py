@@ -7,7 +7,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import get_settings
-from app.routers import auth, sessions, verification, websocket as ws_router
+from app.routers import auth, sessions, verification, websocket as ws_router, audio_websocket as audio_ws_router
 from db.database import Base, check_db_connection, engine
 
 

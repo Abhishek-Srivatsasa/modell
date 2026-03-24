@@ -1,9 +1,10 @@
 from __future__ import annotations
+import uuid
 
 from typing import Optional
 
 from sqlalchemy import Boolean, Column, String, func, text
-from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy import String
 from sqlalchemy.types import DateTime
 
 from db.database import Base
@@ -15,9 +16,9 @@ class User(Base):
     __tablename__ = "users"
 
     id = Column(
-        UUID(as_uuid=True),
+        String(36),
         primary_key=True,
-        server_default=text("gen_random_uuid()"),
+        default=lambda: __import__("uuid").uuid4().hex,
         nullable=False,
     )
     email = Column(String, unique=True, nullable=False, index=True)

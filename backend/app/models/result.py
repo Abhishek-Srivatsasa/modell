@@ -1,7 +1,9 @@
 from __future__ import annotations
+import uuid
 
 from sqlalchemy import Boolean, Column, Float, ForeignKey, String, func, text
-from sqlalchemy.dialects.postgresql import ARRAY, JSONB, UUID
+from sqlalchemy import JSON as JSONB, String
+from sqlalchemy import JSON as ARRAY
 from sqlalchemy.types import DateTime, Integer
 
 from db.database import Base
@@ -13,12 +15,12 @@ class DetectionResult(Base):
     __tablename__ = "detection_results"
 
     id = Column(
-        UUID(as_uuid=True),
+        String(36),
         primary_key=True,
-        server_default=text("gen_random_uuid()"),
+        default=lambda: __import__("uuid").uuid4().hex,
         nullable=False,
     )
-    session_id = Column(UUID(as_uuid=True), ForeignKey("verification_sessions.id"), nullable=False, index=True)
+    session_id = Column(String(36), ForeignKey("verification_sessions.id"), nullable=False, index=True)
     verdict = Column(String, nullable=False)
     risk_score = Column(Float, nullable=False)
     risk_level = Column(String, nullable=False)
@@ -43,12 +45,12 @@ class FrameResult(Base):
     __tablename__ = "frame_results"
 
     id = Column(
-        UUID(as_uuid=True),
+        String(36),
         primary_key=True,
-        server_default=text("gen_random_uuid()"),
+        default=lambda: __import__("uuid").uuid4().hex,
         nullable=False,
     )
-    session_id = Column(UUID(as_uuid=True), ForeignKey("verification_sessions.id"), nullable=False, index=True)
+    session_id = Column(String(36), ForeignKey("verification_sessions.id"), nullable=False, index=True)
     frame_number = Column(Integer, nullable=False)
     timestamp_ms = Column(Integer, nullable=False)
     xception_score = Column(Float, nullable=True)
