@@ -28,6 +28,7 @@ def create_app() -> FastAPI:
     app.include_router(verification.router, prefix="/api/v1/verify", tags=["verification"])
     app.include_router(sessions.router, prefix="/api/v1/sessions", tags=["sessions"])
     app.include_router(ws_router.router, tags=["websocket"])
+    app.include_router(audio_ws_router.router, tags=["audio-websocket"])
 
     @app.on_event("startup")
     async def on_startup() -> None:
